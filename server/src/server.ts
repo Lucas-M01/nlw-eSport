@@ -6,6 +6,8 @@ import cors from 'cors'
 
 const app = express()
 
+// Validação React Hook Form
+
 app.use(express.json())
 app.use(cors())
 
