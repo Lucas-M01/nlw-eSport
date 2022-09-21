@@ -72,11 +72,12 @@ export function CreatedAtModal() {
                                 <CaretDown size={24} />
                             </Select.Icon>
                         </Select.Trigger>
-                        <Select.Content className="bg-zinc-700 overflow-hidden relative rounded-lg">
+                        <Select.Content className="bg-zinc-700 overflow-hidden rounded-lg">
+                        
                             <Select.Group className="">
                                 {games.map(game => {
                                     return (
-                                    <Select.Item className="select-none py-4 px-8 w-[25rem] flex items-center relative hover:bg-violet-500 " key={game.id} value={game.id}>
+                                    <Select.Item className="select-none py-4 px-8 w-[25rem] flex items-center hover:bg-violet-500 " key={game.id} value={game.id}>
                                         <Select.ItemText>{game.title}</Select.ItemText>
                                         <Select.ItemIndicator className="absolute w-6 inline-flex justify-center pl-2 left-0 items-center">
                                             <Check size={26} />
