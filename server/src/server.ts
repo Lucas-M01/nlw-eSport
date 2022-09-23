@@ -6,7 +6,6 @@ import cors from 'cors'
 
 const app = express()
 
-// Validação Zod
 
 app.use(express.json())
 app.use(cors())

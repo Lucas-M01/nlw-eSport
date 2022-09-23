@@ -1,3 +1,4 @@
+import { FormEvent, useEffect, useState } from "react";
 import axios from 'axios';
 
 import * as Dialog from "@radix-ui/react-dialog";
@@ -7,18 +8,32 @@ import * as ToggleGroup from "@radix-ui/react-toggle-group"
 
 import { CaretDown, Check, GameController } from "phosphor-react";
 import { Input } from "./Form/input";
-import { FormEvent, useEffect, useState } from "react";
-
+import * as z from 'zod'
+import { zodResolver } from "@hookform/resolvers/zod"
+import { useForm } from "react-hook-form"
 
 interface Game {
     id: string;
     title: string;
 }
 
+const schema = z.object({
+  name: z.string().min(1, { message: 'Required' }),
+  yearsPlaying: z.number().min(1).max(30),
+  discord: z.string().min(6).max(60),
+  weekDays: z.array(z.number()),
+  hourStart: z.string(),
+  hourEnd: z.string(),
+  useVoiceChannel: z.boolean(),
+})
+
 export function CreatedAtModal() {
     const [games, setGames] = useState<Game[]>([])
     const [weekDays, setWeekDays] = useState<string[]>([])
     const [useVoiceChannel, setUseVoiceChannel] = useState(false)
+    const { register } = useForm({
+      resolver: zodResolver(schema)
+    })
 
     useEffect(() => {
         axios('http://localhost:3333/games').then(response => {
@@ -73,19 +88,20 @@ export function CreatedAtModal() {
                             </Select.Icon>
                         </Select.Trigger>
                         <Select.Content className="bg-zinc-700 overflow-hidden rounded-lg">
-                        
-                            <Select.Group className="">
-                                {games.map(game => {
+                          <Select.ScrollUpButton className="flex align-center justify-center h-6 bg-zinc-700 text-zinc-500 cursor-default" />
+                                <Select.Group >
+                                  {games.map(game => {
                                     return (
-                                    <Select.Item className="select-none py-4 px-8 w-[25rem] flex items-center hover:bg-violet-500 " key={game.id} value={game.id}>
-                                        <Select.ItemText>{game.title}</Select.ItemText>
-                                        <Select.ItemIndicator className="absolute w-6 inline-flex justify-center pl-2 left-0 items-center">
-                                            <Check size={26} />
-                                        </Select.ItemIndicator>
-                                    </Select.Item>
-                                    )
-                                })}
-                            </Select.Group>
+                                      <Select.Item className="select-none py-4 px-8 w-[25rem] flex items-center hover:bg-violet-500 " key={game.id} value={game.id}>
+                                          <Select.ItemText>{game.title}</Select.ItemText>
+                                          <Select.ItemIndicator className="absolute w-6 inline-flex justify-center pl-2 left-0 items-center">
+                                              <Check size={26} />
+                                          </Select.ItemIndicator>
+                                      </Select.Item>
+                                      )
+                                    })}
+                                </Select.Group>
+                          <Select.ScrollDownButton className="flex align-center justify-center h-6 bg-zinc-700 text-zinc-500 cursor-default" />
                         </Select.Content>
                     </Select.Root>
                 </div>

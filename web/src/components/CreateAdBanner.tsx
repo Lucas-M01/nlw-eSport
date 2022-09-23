@@ -3,8 +3,8 @@ import * as Dialog from '@radix-ui/react-dialog'
 
 export function CreateAdBanner() {
     return(
-      <div className="mt-8 self-stretch rounded-lg pt-1 bg-nlw-gradient overflow-hidden w-[1344px]">
-        <div className="bg-[#2A2634] px-8 py-6 flex justify-between items-center">
+      <div className="mt-8 self-stretch rounded-t-lg pt-1 bg-nlw-gradient overflow-hidden">
+        <div className="bg-[#2A2634] sm:px-8 px-4 py-6 flex justify-between items-center">
           <div>
             <strong className="font-black text-2xl text-white block">Não encontrou seu duo?</strong>
             <span className="text-zinc-400 block">Publique um anúncio para encontrar novos players!</span>
