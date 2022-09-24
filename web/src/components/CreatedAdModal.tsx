@@ -6,7 +6,7 @@ import * as Checkbox from "@radix-ui/react-checkbox"
 import * as Select from "@radix-ui/react-select"
 import * as ToggleGroup from "@radix-ui/react-toggle-group"
 
-import { CaretDown, Check, GameController } from "phosphor-react";
+import { CaretDown, CaretUp, Check, GameController } from "phosphor-react";
 import { Input } from "./Form/input";
 import * as z from 'zod'
 import { zodResolver } from "@hookform/resolvers/zod"
@@ -87,22 +87,29 @@ export function CreatedAtModal() {
                                 <CaretDown size={24} />
                             </Select.Icon>
                         </Select.Trigger>
-                        <Select.Content className="bg-zinc-700 overflow-hidden rounded-lg">
-                          <Select.ScrollUpButton className="flex align-center justify-center h-6 bg-zinc-700 text-zinc-500 cursor-default" />
-                                <Select.Group >
-                                  {games.map(game => {
-                                    return (
-                                      <Select.Item className="select-none py-4 px-8 w-[25rem] flex items-center hover:bg-violet-500 " key={game.id} value={game.id}>
-                                          <Select.ItemText>{game.title}</Select.ItemText>
-                                          <Select.ItemIndicator className="absolute w-6 inline-flex justify-center pl-2 left-0 items-center">
-                                              <Check size={26} />
-                                          </Select.ItemIndicator>
-                                      </Select.Item>
-                                      )
-                                    })}
-                                </Select.Group>
-                          <Select.ScrollDownButton className="flex align-center justify-center h-6 bg-zinc-700 text-zinc-500 cursor-default" />
-                        </Select.Content>
+                        <Select.Portal>
+                          <Select.Content className="bg-zinc-700 text-white overflow-hidden rounded-lg">
+                            <Select.ScrollUpButton className="flex align-center justify-center h-6 bg-zinc-700 pt-2 text-white cursor-default" >
+                              <CaretUp />
+                            </Select.ScrollUpButton>
+                              <Select.Viewport>
+
+                                    {games.map(game => {
+                                      return (
+                                        <Select.Item className="select-none py-4 px-8 w-[25rem] flex items-center hover:bg-violet-500 " key={game.id} value={game.id}>
+                                            <Select.ItemText>{game.title}</Select.ItemText>
+                                            <Select.ItemIndicator className="absolute w-6 inline-flex justify-center pl-2 left-0 items-center">
+                                                <Check size={26} />
+                                            </Select.ItemIndicator>
+                                        </Select.Item>
+                                        )
+                                      })}
+                              </Select.Viewport>
+                              <Select.ScrollDownButton className="flex justify-center align-center h-6 bg-zinc-700 text-white cursor-default">
+                                <CaretDown />
+                              </Select.ScrollDownButton>
+                          </Select.Content>
+                        </Select.Portal>
                     </Select.Root>
                 </div>
 

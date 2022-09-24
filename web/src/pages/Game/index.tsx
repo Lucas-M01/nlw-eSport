@@ -2,9 +2,9 @@ import { Header } from "./components/Header";
 
 export function Game() {
     return(
-        <div>
+        <div className="ml-28">
             <Header />
-            <h1 className="bg-white">sdsdsdsdsadFSDFSDFSD</h1>
+            
         </div>
     )
 }
