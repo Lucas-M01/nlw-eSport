@@ -12,9 +12,17 @@ import * as z from 'zod'
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 
+import { toast } from "react-toastify";
+
+
 interface Game {
     id: string;
     title: string;
+}
+
+interface Props {
+  game: Game;
+  handleClose: () => void;
 }
 
 const schema = z.object({
@@ -30,6 +38,10 @@ const schema = z.object({
 export function CreatedAtModal() {
     const [games, setGames] = useState<Game[]>([])
     const [weekDays, setWeekDays] = useState<string[]>([])
+    // const [userDiscord, setUserDiscord] = useState<string>(
+    //   localStorage?.user.username || ""
+    // );
+    
     const [useVoiceChannel, setUseVoiceChannel] = useState(false)
     const { register } = useForm({
       resolver: zodResolver(schema)
@@ -46,7 +58,6 @@ export function CreatedAtModal() {
 
         const formData = new FormData(event.target as HTMLFormElement)
         const data = Object.fromEntries(formData)
-
         // Validação com React Hook Form
         if(!data.name) {
             return
@@ -64,10 +75,11 @@ export function CreatedAtModal() {
                 useVoiceChannel: useVoiceChannel,
             })
 
-            alert('Anúncio criado com sucesso!')
+            toast.success("Anúncio criado com sucesso!")
+            
         } catch (err) {
             console.log(err);
-            alert('Erro ao criar anúncio!')
+            toast.error("Erro ao criar anúncio! Tente novamente mais tarde!");
         }
     }
     return(
@@ -75,14 +87,19 @@ export function CreatedAtModal() {
           <Dialog.Overlay className='bg-black/60 inset-0 fixed' />
 
           <Dialog.Content className='fixed bg-[#2A2634] py-8 px-10 text-white top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 rounded-lg w-[480px] shadow-lg shadow-black/25'>
-            <Dialog.Title className='text-3xl font-black'>Publique um anúncio</Dialog.Title>
+            <Dialog.Title className='text-3xl font-black'>
+              Publique um anúncio
+              <div>
+                
+              </div>
+              </Dialog.Title>
 
               <form onSubmit={handleCreatedAd} className='mt-8 flex flex-col gap-4'>
                 <div className='flex flex-col gap-2'>
                   <label className='font-semibold' htmlFor="game">Qual o game?</label>
                     <Select.Root name="game">
-                        <Select.Trigger className="bg-zinc-900 py-3 px-4 rounded text-sm placeholder:text-zinc-500 flex justify-between items-center">
-                            <Select.Value  placeholder="Selecione o game que deseja jogar" />
+                        <Select.Trigger className="bg-zinc-900 py-3 px-4 rounded text-sm placeholder:text-zinc-200 flex justify-between items-center">
+                            <Select.Value />
                             <Select.Icon>
                                 <CaretDown size={24} />
                             </Select.Icon>
@@ -174,7 +191,7 @@ export function CreatedAtModal() {
                   Costumo me conectar no chat de voz
                 </label>
 
-                <footer className="mt-4 flex justify-end gap-4">
+                <footer className="mt-3 flex justify-end gap-4">
                   <Dialog.Close type="button" className="bg-zinc-500 px-5 h-12 rounded-md font-semibold hover:bg-zinc-600">Cancelar</Dialog.Close>
                   <button className="bg-violet-500 px-5 h-12 rounded-md font-semibold flex items-center gap-3 hover:bg-violet-600" type="submit">
                     <GameController size={24} />

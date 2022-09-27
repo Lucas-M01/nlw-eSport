@@ -28,6 +28,24 @@ app.get('/games', async (req, res) => {
     return res.json(games)
 })
 
+app.get('/game/:id', async (req, res) => {
+    const gameId = req.params.id
+    const game = await prisma.game.findMany({
+        select: {
+            id: true,
+            about: true,
+            bannerUrl: true,
+            tags: true,
+            title: true,
+        },
+        where: {
+            id: gameId
+        }
+    })
+
+    return res.json(game)
+})
+
 app.post('/games/:id/ads', async (req, res) => {
     const gameId = req.params.id
     const body = req.body

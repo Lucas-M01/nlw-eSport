@@ -8,23 +8,27 @@ import { CreatedAtModal } from '../../components/CreatedAdModal'
 
 import * as Dialog from '@radix-ui/react-dialog'
 import axios from 'axios'
+import { Link } from 'react-router-dom'
 
 import "keen-slider/keen-slider.min.css";
 import '../../styles/main.css'
 
-import logoImg from '../../assets/logo-nlw-esports.svg'
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
-interface Game {
-    id: string;
-    title: string;
-    bannerUrl: string;
+import logoImg from '../../assets/logo-nlw-esports.svg'
+import { Game } from "../Game";
+
+export interface GameInfo extends Game{
     _count: {
         ads: number;
     }
 }
 
+
 export function Home() {
-    const [games, setGames] = useState<Game[]>([])
+    const [gameSelected, setGameSelected] = useState<Game>();
+    const [games, setGames] = useState<GameInfo[]>([])
     const [slideRef, instanceRef] = useKeenSlider<HTMLDivElement>({
       initial: 0,
       rubberband: false,
@@ -48,34 +52,49 @@ export function Home() {
             slides: { perView: 6.5, spacing: 10 },
         },
       },
-      mode: "free",
+      mode: "free-snap",
       slides: { origin: "center", perView: 5.5, spacing: 10 },
     })
-  
+
+    const contextClass = {
+        success: "bg-[#2A2634] relative flex p-3 min-h-10 rounded-md justify-between overflow-hidden cursor-pointer"
+    }
+
     useEffect(() => {
-      axios('http://localhost:3333/games').then(res => {
-          setGames(res.data)
-        })
-    }, [])
+        axios("http://localhost:3333/games").then((response) => {
+            setGames(response.data);
+        });
+    }, []);
+
+    const setGame = (token: string) => {
+        localStorage.setItem("GameToken", token)
+    }
 
     return (
-        <div className="max-w-[1344px] mx-auto sm:px-8 md:px-10 flex flex-col items-center my-20 mb-20">
-            <img src={logoImg} className="w-72 h-40" />
-            <h1 className="text-6xl text-white font-black mt-20 mb-16" >Seu <span className="text-transparent bg-nlw-gradient bg-clip-text">duo</span> está aqui.</h1>
+        <div className="max-w-[1344px] mx-auto sm:px-8 md:px-10 flex flex-col items-center mt-10 ">
+            <ToastContainer
+                theme={"dark"}
+                position="top-right"
+                closeOnClick
+                autoClose={5000}
+                toastClassName={(type) => contextClass.success}
+            />
+            <img src={logoImg} className="w-60 h-28" />
+            <h1 className="text-5xl text-white font-black mt-16 mb-16" >Seu <span className="text-transparent bg-nlw-gradient bg-clip-text">duo</span> está aqui.</h1>
             
             <div className="flex items-center">
-                <div ref={slideRef} className="keen-slider max-w-[1220px] mx-6"> 
+                <div ref={slideRef} className="keen-slider max-h-56 max-w-[1150px] mx-6"> 
                 {games.map(game => {
                     return (
-                        <div key={game.id} className="keen-slider__slide rounded-lg overflow-hidden">
-                            <GameBanner bannerUrl={game.bannerUrl} title={game.title} adsCount={game._count.ads} />
-                        </div>
+                        <Link to={`/game/${game.title}`}  key={game.id} className="keen-slider__slide rounded-lg overflow-hidden">
+                            <GameBanner bannerUrl={game.bannerUrl} handleClick={() => setGameSelected(game)} title={game.title} adsCount={game._count.ads} />
+                        </Link>
                     )
-                    })}
+                })}
                 </div>
             </div>
-            
-            <div className="w-[1220px]">
+
+            <div className="w-[1150px]">
                 <Dialog.Root>
                     <CreateAdBanner />
                     <CreatedAtModal />
