@@ -2,13 +2,62 @@ import express from 'express'
 import { PrismaClient } from '@prisma/client'
 import { convertHoursStringToMinutes } from './utils/convert-to-minutes'
 import { convertMinutesToHoursString } from './utils/convert-to-hours'
+import axios from 'axios'
+import url from 'url'
 import cors from 'cors'
 
 const app = express()
 
-
 app.use(express.json())
 app.use(cors())
+
+let accessToken = ''; 
+let refreshToken = '';
+
+
+app.get('/auth/redirect', async (req, res) => {
+    const { code } = req.query
+    if(code) {
+        try {
+            const formData = new url.URLSearchParams({
+                    client_id: "1024336310468620348",
+                    client_secret:"4HxmzRgjdmGqH9TzunV6nk0m5QNuTe95",
+                    grant_type: "authorization_code",  
+                    code: code.toString(),
+                    redirect_uri: "http://localhost:3333/auth/redirect"
+            })
+            const response = await axios.post('https://discord.com/api/v8/oauth2/token', formData.toString(),
+            {
+                headers: {
+                    'Content-type': 'application/x-www-form-urlencoded'
+                }
+            }
+        )
+            const { access_token, refresh_token } = response.data
+            accessToken = access_token
+            refreshToken = refresh_token
+            res.send(200)
+        }catch (err) {
+            console.log(err)
+            res.sendStatus(400)
+        }
+        
+    }
+})
+
+app.get('/api/auth/user', async (req, res) => {
+    try {
+        const response = await axios.get('https://discord.com/api/v8/users/@me', {
+            headers: {
+                Authorization: `Bearer ${accessToken}`
+            }
+        })
+        res.send(response.data)
+    } catch (err) {
+        console.log(err);
+        res.sendStatus(400)
+    }
+})
 
 const prisma = new PrismaClient({
     log: ['query']
@@ -33,10 +82,11 @@ app.get('/game/:id', async (req, res) => {
     const game = await prisma.game.findMany({
         select: {
             id: true,
-            about: true,
-            bannerUrl: true,
-            tags: true,
             title: true,
+            bannerUrl: true,
+            about: true,
+            tags: true,
+            
         },
         where: {
             id: gameId
@@ -47,23 +97,47 @@ app.get('/game/:id', async (req, res) => {
 })
 
 app.post('/games/:id/ads', async (req, res) => {
-    const gameId = req.params.id
-    const body = req.body
-
-    const ad = await prisma.ad.create({
-        data: {
-            gameId,
-            name: body.name,
-            weekDays: body.weekDays.join(','),
-            useVoiceChannel: body.useVoiceChannel,
-            yearsPlaying: body.yearsPlaying,
-            hourStart: convertHoursStringToMinutes(body.hourStart),
-            hourEnd: convertHoursStringToMinutes(body.hourEnd),
-            discord: body.discord
+    try {
+        const gameId = String(req.params.id)
+        const body: any = req.body
+        if(!body.name){
+            throw new Error('Nome não informado')
         }
-    })
-
-    return res.status(201).json(ad)
+    
+        if(!body.discord){
+            throw new Error('Discord não informado')
+        }
+    
+        if(!body.weekDays){
+            throw new Error('Dias disponibilidade não informado')
+        }
+    
+        if(!body.hourStart){
+            throw new Error('Horário de início não informado')
+        }
+    
+        if(!body.hourEnd){
+            throw new Error('Horário Final não informado')
+        }
+    
+        const ad = await prisma.ad.create({
+            data: {
+                gameId,
+                name: body.name,
+                weekDays: body.weekDays.join(','),
+                useVoiceChannel: body.useVoiceChannel,
+                yearsPlaying: body.yearsPlaying,
+                hourStart: convertHoursStringToMinutes(body.hourStart),
+                hourEnd: convertHoursStringToMinutes(body.hourEnd),
+                discord: body.discord
+            }
+        })
+    
+        return res.status(201).json(ad)
+    } catch (err) {
+        console.error(err)
+        return res.status(500).end(err)
+    }
 })
 
 app.get('/games/:id/ads', async (req, res) => {
@@ -72,6 +146,7 @@ app.get('/games/:id/ads', async (req, res) => {
         select: {
             id: true,
             name: true,
+            discord: true,
             weekDays: true,
             useVoiceChannel: true,
             yearsPlaying: true,

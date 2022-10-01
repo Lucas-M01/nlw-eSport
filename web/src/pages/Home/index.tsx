@@ -25,9 +25,11 @@ export interface GameInfo extends Game{
     }
 }
 
+function saveIdGame(game: any) {
+    localStorage.setItem("id", game)
+}
 
 export function Home() {
-    const [gameSelected, setGameSelected] = useState<Game>();
     const [games, setGames] = useState<GameInfo[]>([])
     const [slideRef, instanceRef] = useKeenSlider<HTMLDivElement>({
       initial: 0,
@@ -66,15 +68,11 @@ export function Home() {
         });
     }, []);
 
-    const setGame = (token: string) => {
-        localStorage.setItem("GameToken", token)
-    }
-
     return (
         <div className="max-w-[1344px] mx-auto sm:px-8 md:px-10 flex flex-col items-center mt-10 ">
             <ToastContainer
                 theme={"dark"}
-                position="top-right"
+                position="top-center"
                 closeOnClick
                 autoClose={5000}
                 toastClassName={(type) => contextClass.success}
@@ -87,7 +85,7 @@ export function Home() {
                 {games.map(game => {
                     return (
                         <Link to={`/game/${game.title}`}  key={game.id} className="keen-slider__slide rounded-lg overflow-hidden">
-                            <GameBanner bannerUrl={game.bannerUrl} handleClick={() => setGameSelected(game)} title={game.title} adsCount={game._count.ads} />
+                            <GameBanner bannerUrl={game.bannerUrl} handleClick={() => saveIdGame(game.id)} title={game.title} adsCount={game._count.ads} />
                         </Link>
                     )
                 })}
@@ -97,6 +95,7 @@ export function Home() {
             <div className="w-[1150px]">
                 <Dialog.Root>
                     <CreateAdBanner />
+                   
                     <CreatedAtModal />
                 </Dialog.Root>
             </div>

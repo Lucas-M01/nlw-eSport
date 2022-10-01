@@ -14,17 +14,22 @@ export interface DuoCardProps {
 
 interface Props {
     data: DuoCardProps;
-    onConnect?: () => void;
+    discord?: string;
 }
 
-export function DuoCard({data, onConnect}: Props) {
+export function DuoCard({data}: Props) {
     return (
         <div className="bg-[#2A2634] p-5 h-full w-60 rounded">
             <DuoInfo 
                 label="Nome"
                 value={data.name}
-            />            
+            />      
 
+            <DuoInfo 
+                label="Discord"
+                value={data.discord}
+            />            
+                    
             <DuoInfo 
                 label="Tempo de jogo"
                 value={`${data.yearsPlaying} ano(s)`}
@@ -41,16 +46,7 @@ export function DuoCard({data, onConnect}: Props) {
                 colorValue={data.useVoiceChannel ? 'text-[#34D399]' : 'text-[#F87171]'}
             />
     
-            <button 
-                className="w-full h-11 mt-4 bg-[#8B5CF6] rounded-lg flex items-center justify-center cursor-pointer"
-                onClick={onConnect}
-            >
-                <GameController className="text-white mr-2" size={20} />
-    
-                <p className="text-white text-sm font-semibold">
-                    Conectar
-                </p>
-            </button>
+            
         </div>
     );
   }

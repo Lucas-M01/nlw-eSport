@@ -58,9 +58,25 @@ export function CreatedAtModal() {
 
         const formData = new FormData(event.target as HTMLFormElement)
         const data = Object.fromEntries(formData)
-        // Validação com React Hook Form
-        if(!data.name) {
-            return
+       
+        if(!data.game){
+          return toast.error("Informe o jogo")
+        }
+      
+        if (!data.name) {
+          return toast.error("Informe seu Nome");
+        }
+
+        if (!data.discord) {
+            return toast.error("Informe seu Discord");
+        }
+
+        if (weekDays.length === 0) {
+            return toast.error("Selecione pelo menos um dia");
+        }
+
+        if (data.hourStart === "" || data.hourEnd === "") {
+            return toast.error("Informe um horário disponível");
         }
         
 
@@ -82,6 +98,7 @@ export function CreatedAtModal() {
             toast.error("Erro ao criar anúncio! Tente novamente mais tarde!");
         }
     }
+
     return(
         <Dialog.Portal>
           <Dialog.Overlay className='bg-black/60 inset-0 fixed' />

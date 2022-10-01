@@ -11,8 +11,8 @@ export function DuoInfo({ label, value, colorValue = 'text-white'}: Props) {
             {label}
           </h3>
 
-          <p className={`${colorValue} mb-2 w-max font-semibold`}>
-            {value.length < 30 ? value : value.split(" ", 1).concat("...")}
+          <p className={`${colorValue} mb-2 font-semibold overflow-hidden text-ellipsis whitespace-nowrap`}>
+            {value}
           </p>
     </div>
   );
