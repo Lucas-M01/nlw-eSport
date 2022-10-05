@@ -86,7 +86,7 @@ app.get('/game/:id', async (req, res) => {
             bannerUrl: true,
             about: true,
             tags: true,
-            
+            link: true,
         },
         where: {
             id: gameId

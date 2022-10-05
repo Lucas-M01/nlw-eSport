@@ -18,6 +18,7 @@ import "react-toastify/dist/ReactToastify.css";
 
 import logoImg from '../../assets/logo-nlw-esports.svg'
 import { Game } from "../Game";
+import { CaretLeft, CaretRight } from "phosphor-react";
 
 export interface GameInfo extends Game{
     _count: {
@@ -73,6 +74,7 @@ export function Home() {
             <ToastContainer
                 theme={"dark"}
                 position="top-center"
+                limit={12}
                 closeOnClick
                 autoClose={5000}
                 toastClassName={(type) => contextClass.success}
@@ -80,15 +82,20 @@ export function Home() {
             <img src={logoImg} className="w-60 h-28" />
             <h1 className="text-5xl text-white font-black mt-16 mb-16" >Seu <span className="text-transparent bg-nlw-gradient bg-clip-text">duo</span> está aqui.</h1>
             
+           
             <div className="flex items-center">
-                <div ref={slideRef} className="keen-slider max-h-56 max-w-[1150px] mx-6"> 
-                {games.map(game => {
-                    return (
-                        <Link to={`/game/${game.title}`}  key={game.id} className="keen-slider__slide rounded-lg overflow-hidden">
-                            <GameBanner bannerUrl={game.bannerUrl} handleClick={() => saveIdGame(game.id)} title={game.title} adsCount={game._count.ads} />
-                        </Link>
-                    )
-                })}
+                <div ref={slideRef} className="keen-slider max-h-56 max-w-[1150px] mx-2"> 
+                    
+                
+                    {games.map(game => {
+                        return (
+                            <Link to={`/game/${game.title}`}  key={game.id} className="keen-slider__slide rounded-lg overflow-hidden">
+                                <GameBanner bannerUrl={game.bannerUrl} handleClick={() => saveIdGame(game.id)} title={game.title} adsCount={game._count.ads} />
+                            </Link>
+                        )
+                    })}
+
+                   
                 </div>
             </div>
 
@@ -96,7 +103,7 @@ export function Home() {
                 <Dialog.Root>
                     <CreateAdBanner />
                    
-                    <CreatedAtModal />
+                    <CreatedAtModal  />
                 </Dialog.Root>
             </div>
         </div>

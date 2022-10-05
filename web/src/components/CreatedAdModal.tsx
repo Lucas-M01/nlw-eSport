@@ -25,16 +25,6 @@ interface Props {
   handleClose: () => void;
 }
 
-const schema = z.object({
-  name: z.string().min(1, { message: 'Required' }),
-  yearsPlaying: z.number().min(1).max(30),
-  discord: z.string().min(6).max(60),
-  weekDays: z.array(z.number()),
-  hourStart: z.string(),
-  hourEnd: z.string(),
-  useVoiceChannel: z.boolean(),
-})
-
 export function CreatedAtModal() {
     const [games, setGames] = useState<Game[]>([])
     const [weekDays, setWeekDays] = useState<string[]>([])
@@ -43,9 +33,6 @@ export function CreatedAtModal() {
     // );
     
     const [useVoiceChannel, setUseVoiceChannel] = useState(false)
-    const { register } = useForm({
-      resolver: zodResolver(schema)
-    })
 
     useEffect(() => {
         axios('http://localhost:3333/games').then(response => {
@@ -92,7 +79,7 @@ export function CreatedAtModal() {
             })
 
             toast.success("Anúncio criado com sucesso!")
-            
+            location.reload()
         } catch (err) {
             console.log(err);
             toast.error("Erro ao criar anúncio! Tente novamente mais tarde!");
@@ -116,7 +103,7 @@ export function CreatedAtModal() {
                   <label className='font-semibold' htmlFor="game">Qual o game?</label>
                     <Select.Root name="game">
                         <Select.Trigger className="bg-zinc-900 py-3 px-4 rounded text-sm placeholder:text-zinc-200 flex justify-between items-center">
-                            <Select.Value />
+                            <Select.Value placeholder="Selecione um jogo" />
                             <Select.Icon>
                                 <CaretDown size={24} />
                             </Select.Icon>

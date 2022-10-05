@@ -1,6 +1,4 @@
-import { GameController } from "phosphor-react";
 import { DuoInfo } from "./DuoInfo";
-
 export interface DuoCardProps {
     id: string;
     discord: string;
@@ -28,6 +26,7 @@ export function DuoCard({data}: Props) {
             <DuoInfo 
                 label="Discord"
                 value={data.discord}
+                
             />            
                     
             <DuoInfo 
