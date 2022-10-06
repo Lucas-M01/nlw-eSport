@@ -11,53 +11,6 @@ const app = express()
 app.use(express.json())
 app.use(cors())
 
-let accessToken = ''; 
-let refreshToken = '';
-
-
-app.get('/auth/redirect', async (req, res) => {
-    const { code } = req.query
-    if(code) {
-        try {
-            const formData = new url.URLSearchParams({
-                    client_id: "1024336310468620348",
-                    client_secret:"4HxmzRgjdmGqH9TzunV6nk0m5QNuTe95",
-                    grant_type: "authorization_code",  
-                    code: code.toString(),
-                    redirect_uri: "http://localhost:3333/auth/redirect"
-            })
-            const response = await axios.post('https://discord.com/api/v8/oauth2/token', formData.toString(),
-            {
-                headers: {
-                    'Content-type': 'application/x-www-form-urlencoded'
-                }
-            }
-        )
-            const { access_token, refresh_token } = response.data
-            accessToken = access_token
-            refreshToken = refresh_token
-            res.send(200)
-        }catch (err) {
-            console.log(err)
-            res.sendStatus(400)
-        }
-        
-    }
-})
-
-app.get('/api/auth/user', async (req, res) => {
-    try {
-        const response = await axios.get('https://discord.com/api/v8/users/@me', {
-            headers: {
-                Authorization: `Bearer ${accessToken}`
-            }
-        })
-        res.send(response.data)
-    } catch (err) {
-        console.log(err);
-        res.sendStatus(400)
-    }
-})
 
 const prisma = new PrismaClient({
     log: ['query']
@@ -106,6 +59,10 @@ app.post('/games/:id/ads', async (req, res) => {
     
         if(!body.discord){
             throw new Error('Discord não informado')
+        }
+
+        if(!body.yearsPlaying){
+            throw new Error('Tempo de jogo não informado')
         }
     
         if(!body.weekDays){

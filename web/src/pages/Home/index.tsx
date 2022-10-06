@@ -18,7 +18,6 @@ import "react-toastify/dist/ReactToastify.css";
 
 import logoImg from '../../assets/logo-nlw-esports.svg'
 import { Game } from "../Game";
-import { CaretLeft, CaretRight } from "phosphor-react";
 
 export interface GameInfo extends Game{
     _count: {
@@ -81,25 +80,23 @@ export function Home() {
             />
             <img src={logoImg} className="w-60 h-28" />
             <h1 className="text-5xl text-white font-black mt-16 mb-16" >Seu <span className="text-transparent bg-nlw-gradient bg-clip-text">duo</span> está aqui.</h1>
-            
-           
-            <div className="flex items-center">
-                <div ref={slideRef} className="keen-slider max-h-56 max-w-[1150px] mx-2"> 
-                    
-                
-                    {games.map(game => {
-                        return (
-                            <Link to={`/game/${game.title}`}  key={game.id} className="keen-slider__slide rounded-lg overflow-hidden">
-                                <GameBanner bannerUrl={game.bannerUrl} handleClick={() => saveIdGame(game.id)} title={game.title} adsCount={game._count.ads} />
-                            </Link>
-                        )
-                    })}
+            <main>
+                {games.length > 0 ? (
+                    <div className="flex items-center ">
+                        <div ref={slideRef} className="keen-slider mb-8 max-h-56 max-w-[1150px] mx-2"> 
+                            {games.map(game => {
+                                return (
+                                    <Link to={`/game/${game.title}`}  key={game.id} className="keen-slider__slide rounded-lg shadow-2xl shadow-black/25">
+                                        <GameBanner bannerUrl={game.bannerUrl} handleClick={() => saveIdGame(game.id)} title={game.title} adsCount={game._count.ads} />
+                                    </Link>
+                                )
+                            })}
+                        </div>
+                    </div>
+                ): ( <div></div> )}
+            </main>
 
-                   
-                </div>
-            </div>
-
-            <div className="w-[1150px]">
+            <div className="w-[1150px] ">
                 <Dialog.Root>
                     <CreateAdBanner />
                    

@@ -8,9 +8,6 @@ import * as ToggleGroup from "@radix-ui/react-toggle-group"
 
 import { CaretDown, CaretUp, Check, GameController } from "phosphor-react";
 import { Input } from "./Form/input";
-import * as z from 'zod'
-import { zodResolver } from "@hookform/resolvers/zod"
-import { useForm } from "react-hook-form"
 
 import { toast } from "react-toastify";
 
@@ -20,18 +17,9 @@ interface Game {
     title: string;
 }
 
-interface Props {
-  game: Game;
-  handleClose: () => void;
-}
-
 export function CreatedAtModal() {
     const [games, setGames] = useState<Game[]>([])
     const [weekDays, setWeekDays] = useState<string[]>([])
-    // const [userDiscord, setUserDiscord] = useState<string>(
-    //   localStorage?.user.username || ""
-    // );
-    
     const [useVoiceChannel, setUseVoiceChannel] = useState(false)
 
     useEffect(() => {
@@ -52,6 +40,10 @@ export function CreatedAtModal() {
       
         if (!data.name) {
           return toast.error("Informe seu Nome");
+        }
+        
+        if (!data.yearsPlaying) {
+          return toast.error("Informe seu tempo de jogo");
         }
 
         if (!data.discord) {
@@ -101,7 +93,7 @@ export function CreatedAtModal() {
               <form onSubmit={handleCreatedAd} className='mt-8 flex flex-col gap-4'>
                 <div className='flex flex-col gap-2'>
                   <label className='font-semibold' htmlFor="game">Qual o game?</label>
-                    <Select.Root name="game">
+                    <Select.Root name="game" >
                         <Select.Trigger className="bg-zinc-900 py-3 px-4 rounded text-sm placeholder:text-zinc-200 flex justify-between items-center">
                             <Select.Value placeholder="Selecione um jogo" />
                             <Select.Icon>
@@ -117,7 +109,7 @@ export function CreatedAtModal() {
 
                                     {games.map(game => {
                                       return (
-                                        <Select.Item className="select-none py-4 px-8 w-[25rem] flex items-center hover:bg-violet-500 " key={game.id} value={game.id}>
+                                        <Select.Item className="select-none py-4 px-8 w-[25rem] flex items-center hover:bg-violet-500 " key={game.id} value={game.id}  >
                                             <Select.ItemText>{game.title}</Select.ItemText>
                                             <Select.ItemIndicator className="absolute w-6 inline-flex justify-center pl-2 left-0 items-center">
                                                 <Check size={26} />
@@ -136,17 +128,17 @@ export function CreatedAtModal() {
 
                 <div className='flex flex-col gap-2'>
                   <label htmlFor="name">Seu nome (ou nickname)</label>
-                  <Input name="name" id="name" placeholder="Como te chamam dentro do game?" />
+                  <Input name="name" id="name" placeholder="Como te chamam dentro do game?" maxLength={80} />
                 </div>
 
                 <div className="grid grid-cols-2 gap-6">
                   <div className='flex flex-col gap-2'>
                     <label htmlFor="yearsPlaying">Joga há quantos anos?</label>
-                    <Input name="yearsPlaying" id="yearsPlaying" placeholder="Tudo bem ser ZERO"type="number" />
+                    <Input name="yearsPlaying" id="yearsPlaying" placeholder="Tudo bem ser ZERO" type="number" min={0} max={50} />
                   </div>
                   <div className='flex flex-col gap-2'>
                     <label htmlFor="discord">Qual seu Discord?</label>
-                    <Input name="discord" id="discord" type="text" placeholder='Usuario#0000' />
+                    <Input name="discord" id="discord" type="text" placeholder='Usuario#0000' minLength={7} />
                   </div>
                 </div>
 

@@ -75,8 +75,6 @@ export function Game() {
         
         const { title, bannerUrl, tags, about, link, id }: Game = game[0]
 
-
-
     return(
         <div className="ml-28  mr-28">
             <Header title={title} />
