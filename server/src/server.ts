@@ -2,8 +2,6 @@ import express from 'express'
 import { PrismaClient } from '@prisma/client'
 import { convertHoursStringToMinutes } from './utils/convert-to-minutes'
 import { convertMinutesToHoursString } from './utils/convert-to-hours'
-import axios from 'axios'
-import url from 'url'
 import cors from 'cors'
 
 const app = express()

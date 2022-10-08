@@ -32,14 +32,13 @@ function saveIdGame(game: any) {
 export function Home() {
     const [games, setGames] = useState<GameInfo[]>([])
     const [slideRef, instanceRef] = useKeenSlider<HTMLDivElement>({
-      initial: 0,
       rubberband: false,
       breakpoints: {
         "(min-width: 200px)": {
-          slides: { perView: 2.2, spacing: 5 },
+            slides: { perView: 1.3, spacing: 10 },
         },
         "(min-width: 400px)": {
-          slides: { perView: 2.5, spacing: 5 },
+            slides: { perView: 2.5, spacing: 5 },
         },
         "(min-width: 600px)": {
             slides: { perView: 3.5, spacing: 5 },
@@ -53,7 +52,7 @@ export function Home() {
         "(min-width: 1200px)": {
             slides: { perView: 6.5, spacing: 10 },
         },
-      },
+    },
       mode: "free-snap",
       slides: { origin: "center", perView: 5.5, spacing: 10 },
     })
@@ -69,7 +68,7 @@ export function Home() {
     }, []);
 
     return (
-        <div className="max-w-[1344px] mx-auto sm:px-8 md:px-10 flex flex-col items-center mt-10 ">
+        <div className="max-w-[1344px] mx-auto sm:px-8 md:px-10  flex flex-col items-center mt-11">
             <ToastContainer
                 theme={"dark"}
                 position="top-center"
@@ -78,30 +77,32 @@ export function Home() {
                 autoClose={5000}
                 toastClassName={(type) => contextClass.success}
             />
-            <img src={logoImg} className="w-60 h-28" />
-            <h1 className="text-5xl text-white font-black mt-16 mb-16" >Seu <span className="text-transparent bg-nlw-gradient bg-clip-text">duo</span> está aqui.</h1>
-            <main>
-                {games.length > 0 ? (
-                    <div className="flex items-center ">
-                        <div ref={slideRef} className="keen-slider mb-8 max-h-56 max-w-[1150px] mx-2"> 
-                            {games.map(game => {
-                                return (
-                                    <Link to={`/game/${game.title}`}  key={game.id} className="keen-slider__slide rounded-lg shadow-2xl shadow-black/25">
-                                        <GameBanner bannerUrl={game.bannerUrl} handleClick={() => saveIdGame(game.id)} title={game.title} adsCount={game._count.ads} />
-                                    </Link>
-                                )
-                            })}
-                        </div>
-                    </div>
-                ): ( <div></div> )}
-            </main>
+            <div className="w-full h-full mx-auto px-4 sm:px-8 md:px-10 flex items-center flex-col">
 
-            <div className="w-[1150px] ">
+                <img src={logoImg} className="w-60 h-28" />
+                <h1 className="text-3xl md:text-4xl lg:text-5xl text-white font-black mt-16 mb-16" >Seu <span className="text-transparent bg-nlw-gradient bg-clip-text">duo</span> está aqui.</h1>
+                
+                <main className="w-full " >
+                    {games.length > 0 ? (
+                        <div className="flex items-center ">
+                            <div ref={slideRef} className="keen-slider"> 
+                                {games.map(game => {
+                                    return (
+                                        <Link to={`/game/${game.title}`}  key={game.id} className="keen-slider__slide rounded-lg shadow-2xl shadow-black/25 ">
+                                            <GameBanner bannerUrl={game.bannerUrl} handleClick={() => saveIdGame(game.id)} title={game.title} adsCount={game._count.ads} />
+                                        </Link>
+                                    )
+                                })}
+                            </div>
+                        </div>
+                    ): ( <div></div> )}
+                </main>
+                
                 <Dialog.Root>
                     <CreateAdBanner />
-                   
+                
                     <CreatedAtModal  />
-                </Dialog.Root>
+                </Dialog.Root>               
             </div>
         </div>
     )

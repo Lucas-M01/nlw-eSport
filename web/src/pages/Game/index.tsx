@@ -8,6 +8,7 @@ import { GameController, MagnifyingGlassPlus } from "phosphor-react";
 import { CreatedAtModal } from "../../components/CreatedAdModal";
 import axios from "axios";
 import { ToastContainer } from "react-toastify";
+import { ShowMore } from "./components/ShowMore";
 
 export interface Game {
     id: any;
@@ -28,22 +29,22 @@ export function Game() {
         rubberband: false,
         breakpoints: {
           "(min-width: 200px)": {
-            slides: { perView: 1.5, spacing: 5 },
+            slides: { perView: 1.2, spacing: 5 },
           },
           "(min-width: 400px)": {
-            slides: { perView: 2, spacing: 5 },
+            slides: { perView: 1.5, spacing: 5 },
           },
           "(min-width: 600px)": {
-              slides: { perView: 2.5, spacing: 5 },
+              slides: { perView: 2.2, spacing: 5 },
           },
           "(min-width: 800px)": {
-              slides: { perView: 3.5, spacing: 5 },
+              slides: { perView: 2.5, spacing: 5 },
           },
           "(min-width: 1000px)": {
-              slides: { perView: 4, spacing: 10 },
+              slides: { perView: 3.1, spacing: 10 },
           },
           "(min-width: 1200px)": {
-              slides: { perView: 4.8, spacing: 10 },
+              slides: { perView: 5.2, spacing: 10 },
           },
         },
         mode: "free-snap",
@@ -76,7 +77,7 @@ export function Game() {
         const { title, bannerUrl, tags, about, link, id }: Game = game[0]
 
     return(
-        <div className="ml-28  mr-28">
+        <div className="ml-6 sm:ml-28 md:mr-28 max-w-[1344px]">
             <Header title={title} />
             <ToastContainer
                 theme={"dark"}
@@ -86,11 +87,11 @@ export function Game() {
                 toastClassName={(type) => contextClass.success}
             />
 
-            <main className="flex mt-16 animate-appear">
+            <main className="flex mt-9 md:mt-16 animate-appear w-full">
                 
-                <img src={bannerUrl} className="rounded-lg shadow-2xl shadow-black/25 h-56 " />
+                <img src={bannerUrl} className="rounded-lg shadow-2xl shadow-black/25 h-64 md:h-56 " />
             
-                <div className="ml-9 mr-15 h-60 ">
+                <div className="ml-9 mr-15 hidden sm:block h-60 ">
                     <div className="flex items-center">
                         <h2 className="font-bold text-4xl  text-white mr-3">Sobre</h2>
                         <a target="_blank" href={link}>
@@ -105,16 +106,22 @@ export function Game() {
                         {tags && tags.map((tag: string) => <span key={tag} className="mr-3 hover:shadow-2xl bg-zinc-700 hover:bg-zinc-600 py-0 hover:duration-300 rounded-xl font-bold px-4">{tag}</span>)}
                     </div>
 
-                    <div className="text-zinc-200  mt-4 ">
-                        {about && about.length > 382 ? (
-                            <p className="">{showMore ? about : `${about.substring(0, 382).concat("...")}`}
-                                <button className="text-violet-500 hover:text-violet-400 w-[7.5rem]" onClick={() => setShowMore(!showMore)} >
-                                    {showMore ?  
+                    <div className="text-zinc-200 text-sm md:text-base md:h-full mt-4 ">
+                        {about && about.length > 200 ? (
+                            <p className="">{showMore ? about : `${about.substring(0, 291).concat("...")}`}
+                                <button className="text-violet-500 hover:text-violet-400 hidden lg:block w-[7.5rem]" onClick={() => setShowMore(!showMore)} >
+                                    {showMore ? 
                                         "Mostrar menos"
-                                        : 
-                                        "Mostrar mais "     
+                                       : 
+                                        "Mostrar mais"
                                     }
                                 </button> 
+                                <Dialog.Root>
+                                    <Dialog.Trigger>
+                                        MostrarMais
+                                    </Dialog.Trigger>
+                                    <ShowMore about={about} title={title} tags={tags} link={link} />
+                                </Dialog.Root>
                             </p>) : 
                             <p>{about}</p> }
                     </div>
@@ -122,10 +129,10 @@ export function Game() {
                     
                 </div>
             </main>
-            <section className="mt-6 animate-appear">
+            <section className="mt-11 sm:mt-6 animate-appear">
                 {duos.length > 0 ? (
-                    <div className="flex items-center">
-                        <div ref={slideRef} className="keen-slider max-h-80 max-w-[1220px]">
+                    <div className="sm:flex md:items-center">
+                        <div ref={slideRef} className="keen-slider md:max-h-80">
                             {duos.map(item => {
                                 return(
                                     <div key={item.id} className="keen-slider__slide shadow-2xl shadow-black/25">
@@ -135,7 +142,7 @@ export function Game() {
                             })}
                         </div>
                         <Dialog.Root>
-                            <Dialog.Trigger title="Criar novo anúncio" className="ml-9 text-zinc-200 bg-violet-500 hover:bg-violet-600 rounded-full p-1">
+                            <Dialog.Trigger title="Criar novo anúncio" className="md:ml-9 mt-5 py-2 px-3 rounded after:content-['Publicar'] m-auto sm:m-0 sm:after:content-none after:ml-2 flex text-zinc-200 bg-violet-500 hover:bg-violet-600 md:rounded-full sm:p-1">
                                 <MagnifyingGlassPlus size={24} />
                             </Dialog.Trigger>
                             <CreatedAtModal />

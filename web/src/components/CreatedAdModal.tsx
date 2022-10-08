@@ -82,13 +82,10 @@ export function CreatedAtModal() {
         <Dialog.Portal>
           <Dialog.Overlay className='bg-black/60 inset-0 fixed' />
 
-          <Dialog.Content className='fixed bg-[#2A2634] py-8 px-10 text-white top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 rounded-lg w-[480px] shadow-lg shadow-black/25'>
+          <Dialog.Content className='fixed bg-[#2A2634] py-6 w-96 md:py-8 px-4 md:px-10 text-white top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 rounded-lg md:w-[480px] shadow-lg shadow-black/25'>
             <Dialog.Title className='text-3xl font-black'>
               Publique um anúncio
-              <div>
-                
-              </div>
-              </Dialog.Title>
+            </Dialog.Title>
 
               <form onSubmit={handleCreatedAd} className='mt-8 flex flex-col gap-4'>
                 <div className='flex flex-col gap-2'>
@@ -128,10 +125,10 @@ export function CreatedAtModal() {
 
                 <div className='flex flex-col gap-2'>
                   <label htmlFor="name">Seu nome (ou nickname)</label>
-                  <Input name="name" id="name" placeholder="Como te chamam dentro do game?" maxLength={80} />
+                  <Input name="name" id="name" placeholder="Como te chamam dentro do game?" maxLength={80}  />
                 </div>
 
-                <div className="grid grid-cols-2 gap-6">
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
                   <div className='flex flex-col gap-2'>
                     <label htmlFor="yearsPlaying">Joga há quantos anos?</label>
                     <Input name="yearsPlaying" id="yearsPlaying" placeholder="Tudo bem ser ZERO" type="number" min={0} max={50} />
@@ -172,7 +169,7 @@ export function CreatedAtModal() {
                   </div>
                 </div>
 
-                <label className="mt-2 flex gap-2 text-sm items-center">
+                <label className="mt-2 flex gap-2 text-xs md:text-sm items-center">
                   <Checkbox.Root checked={useVoiceChannel} onCheckedChange={(checked) => {
                     if (checked === true) {
                         setUseVoiceChannel(true)
@@ -187,9 +184,9 @@ export function CreatedAtModal() {
                   Costumo me conectar no chat de voz
                 </label>
 
-                <footer className="mt-3 flex justify-end gap-4">
-                  <Dialog.Close type="button" className="bg-zinc-500 px-5 h-12 rounded-md font-semibold hover:bg-zinc-600">Cancelar</Dialog.Close>
-                  <button className="bg-violet-500 px-5 h-12 rounded-md font-semibold flex items-center gap-3 hover:bg-violet-600" type="submit">
+                <footer className="mt-3 flex justify-end gap-2 sm:gap-4">
+                  <Dialog.Close type="button" className="bg-zinc-500 px-5 h-8 sm:h-12 rounded-md font-semibold hover:bg-zinc-600">Cancelar</Dialog.Close>
+                  <button className="bg-violet-500 px-5 h-8 sm:h-12 rounded-md font-semibold flex items-center gap-3 hover:bg-violet-600" type="submit">
                     <GameController size={24} />
                     Encontrar duo
                   </button>

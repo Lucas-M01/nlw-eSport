@@ -17,7 +17,7 @@ interface Props {
 
 export function DuoCard({data}: Props) {
     return (
-        <div className="bg-[#2A2634] p-5 h-full w-60 rounded">
+        <div className="bg-[#2A2634] p-5 h-full w-72 sm:w-60 rounded">
             <DuoInfo 
                 label="Nome"
                 value={data.name}

@@ -8,7 +8,7 @@ interface Props {
 export function Header({title}: Props) {
     return(
         <div className="h-16 flex items-center">
-            <header className="text-white mt-4 flex items-center max-w-[1344px]">
+            <header className="text-white mt-4 flex items-center ">
                 <Link to="/">
                     <img src={logo} className="mr-2" />
                 </Link>
