@@ -4,7 +4,7 @@ import { DuoCard, DuoCardProps } from "./components/DuoCard";
 import { Header } from "./components/Header";
 
 import * as Dialog from '@radix-ui/react-dialog'
-import { GameController, MagnifyingGlassPlus } from "phosphor-react";
+import { DotsThreeCircle, GameController, MagnifyingGlassPlus } from "phosphor-react";
 import { CreatedAtModal } from "../../components/CreatedAdModal";
 import axios from "axios";
 import { ToastContainer } from "react-toastify";
@@ -87,12 +87,12 @@ export function Game() {
                 toastClassName={(type) => contextClass.success}
             />
 
-            <main className="flex mt-9 md:mt-16 animate-appear w-full">
+            <main className="flex mt-9 h-64 md:mt-16 animate-appear w-full">
                 
                 <img src={bannerUrl} className="rounded-lg shadow-2xl shadow-black/25 h-64 md:h-56 " />
             
-                <div className="ml-9 mr-15 hidden sm:block h-60 ">
-                    <div className="flex items-center">
+                <div className="ml-9 mr-15 mt-24 lg:mt-0 h-60 ">
+                    <div className="items-center hidden lg:flex">
                         <h2 className="font-bold text-4xl  text-white mr-3">Sobre</h2>
                         <a target="_blank" href={link}>
                             <div className="bg-zinc-600 rounded-full flex justify-center w-8 h-8 p-1 items-center hover:bg-zinc-500" title={link}>
@@ -102,30 +102,32 @@ export function Game() {
                         </a>
                     </div>
 
-                    <div className="mt-2 select-none text-zinc-300 ">
+                    <div className="mt-2 hidden lg:block select-none text-zinc-300 ">
                         {tags && tags.map((tag: string) => <span key={tag} className="mr-3 hover:shadow-2xl bg-zinc-700 hover:bg-zinc-600 py-0 hover:duration-300 rounded-xl font-bold px-4">{tag}</span>)}
                     </div>
 
-                    <div className="text-zinc-200 text-sm md:text-base md:h-full mt-4 ">
+                    <div className="text-zinc-200 hidden lg:block text-sm md:text-base md:h-full mt-4 ">
                         {about && about.length > 200 ? (
                             <p className="">{showMore ? about : `${about.substring(0, 291).concat("...")}`}
-                                <button className="text-violet-500 hover:text-violet-400 hidden lg:block w-[7.5rem]" onClick={() => setShowMore(!showMore)} >
+                                <button className="text-violet-500 hover:text-violet-400" onClick={() => setShowMore(!showMore)} >
                                     {showMore ? 
                                         "Mostrar menos"
                                        : 
                                         "Mostrar mais"
                                     }
                                 </button> 
-                                <Dialog.Root>
-                                    <Dialog.Trigger>
-                                        MostrarMais
-                                    </Dialog.Trigger>
-                                    <ShowMore about={about} title={title} tags={tags} link={link} />
-                                </Dialog.Root>
                             </p>) : 
                             <p>{about}</p> }
                     </div>
-                    
+                    <div className="block  lg:hidden bg-violet-500 hover:bg-violet-600 rounded  p-2">
+                                    <Dialog.Root>
+                                        <Dialog.Trigger className='text-zinc-200 flex items-center gap-1'>
+                                            <DotsThreeCircle /> 
+                                            Sobre o jogo
+                                        </Dialog.Trigger>
+                                        <ShowMore about={about} title={title} tags={tags} link={link} />
+                                    </Dialog.Root>
+                    </div>
                     
                 </div>
             </main>
@@ -142,17 +144,17 @@ export function Game() {
                             })}
                         </div>
                         <Dialog.Root>
-                            <Dialog.Trigger title="Criar novo anúncio" className="md:ml-9 mt-5 py-2 px-3 rounded after:content-['Publicar'] m-auto sm:m-0 sm:after:content-none after:ml-2 flex text-zinc-200 bg-violet-500 hover:bg-violet-600 md:rounded-full sm:p-1">
+                            <Dialog.Trigger title="Criar novo anúncio" className="sm:ml-9 mt-5 py-2 px-3 rounded after:content-['Publicar'] m-auto sm:m-0 sm:after:content-none after:ml-2 flex text-zinc-200 bg-violet-500 hover:bg-violet-600 sm:rounded-full sm:p-1">
                                 <MagnifyingGlassPlus size={24} />
                             </Dialog.Trigger>
                             <CreatedAtModal />
                         </Dialog.Root>
                     </div>
                 ) : (
-                    <div className="flex justify-center items-center h-72  rounded">
-                        <div className="bg-[#2A2634] shadow-black/25 shadow-lg rounded flex flex-col items-center p-5">
+                    <div className="flex justify-center w-80 sm:w-full items-center h-72  rounded">
+                        <div className="bg-[#2A2634] shadow-black/25 shadow-lg rounded flex flex-col items-center  p-5">
                             <h3 className="text-zinc-200 block text-lg">Nenhum anúncio encontrado</h3>
-                            <p className="font-semibold text-zinc-200">Nenhum jogador interessado nesse jogo no momento.</p>
+                            <p className="font-semibold text-base text-zinc-200">Nenhum jogador interessado nesse jogo no momento.</p>
                             <Dialog.Root>
                                 <Dialog.Trigger className="py-2 px-3 mt-2 bg-violet-500 hover:bg-violet-600 text-white rounded flex items-center gap-3">
                                     <MagnifyingGlassPlus size={24} />
