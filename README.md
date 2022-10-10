@@ -18,7 +18,8 @@ jogo pode-se entrar em contato com ele pelo discord e assim se divertirem.
 ###  Pagina inicial
 <br>
 
-<img src="https://user-images.githubusercontent.com/82176047/194787007-b5c5a35f-4276-4a97-ac77-0e9eb4909090.png" alt="" width="700" />
+<img src="https://user-images.githubusercontent.com/82176047/194787007-b5c5a35f-4276-4a97-ac77-0e9eb4909090.png" alt="" width="700"  />
+
 
 
 <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -37,6 +38,8 @@ Veja o layout do projeto original através do figma abaixo:
 Esse projeto foi desenvolvido com as seguintes tecnologias:
 
 - [React](https://reactjs.org/)
+- [React Native](https://reactnative.dev/)
+- [Expo](https://docs.expo.dev/)
 - [Node](https://nodejs.org/en/)
 - [PostgreSQL](https://www.postgresql.org/)
 - [Axios](https://axios-http.com/docs/intro)
