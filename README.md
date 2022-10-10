@@ -97,16 +97,38 @@ Clone o repositório e acesse a pasta.
 
 ```bash
 $ git clone https://github.com/Lucas-M01/nlw-eSport.git
+```
 
-Para iniciar o projeto:
+#### Iniciar o Servidor:
+```bash
+# Instalar as dependências
+$ npm install
 
+# Criar o banco de dados
+$ npx prisma migration
+
+# Iniciar o Servidor
+$ npm run dev
+```
+
+#### Inciar o Web:
+```bash
 # Instalar as dependências
 $ npm install
 
 # Iniciar o projeto
 $ npm run dev
-
 ```
+
+#### Iniciar o Mobile:
+```bash
+# Instalar as dependências
+$ npm install
+
+# Criar o banco de dados
+$ npx expo start
+```
+Com isso digitalize o QRcode no navegador com o aplicativo expo no Android ou aplicativo de câmera no IOS
 
 <h4><strong>Essa parte ainda está em manutenção</strong> 😄 </h4>
 
