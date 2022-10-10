@@ -130,5 +130,5 @@ $ npx expo start
 ```
 Com isso digitalize o QRcode no navegador com o aplicativo expo no Android ou aplicativo de câmera no IOS
 
-<h4><strong>Essa parte ainda está em manutenção</strong> 😄 </h4>
+<h4><strong>Por enquanto é isso.</strong> 😄 </h4>
 
