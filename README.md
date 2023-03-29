@@ -93,13 +93,15 @@ utilizado para a criação das tags, utilizado para descrever o gênero de cada 
 
 ## ⚙ Como executar
 
-Clone o repositório e acesse a pasta.
-
+<ol>
+  <li>Clone o repositório e acesse a pasta</li>
+<br>
+  
 ```bash
 $ git clone https://github.com/Lucas-M01/nlw-eSport.git
 ```
 
-Primeiro inicia o servidor:
+  <li>Acesse a pasta <strong>server</strong> e inicia o servidor</li>
 
 #### Iniciar o Servidor:
 ```bash
@@ -113,7 +115,7 @@ $ npx prisma migrate dev
 $ npm run dev
 ```
 
-Depois pode iniciar o Web ou Mobile:
+  <li>Depois acesse a pasta <strong>web</strong> para inicializar ou acesse a <strong>mobile</strong> e inicialize o projeto</li>
 
 #### Inciar o Web:
 ```bash
@@ -132,7 +134,8 @@ $ npm install
 # Criar o banco de dados
 $ npx expo start
 ```
-Com isso digitalize o QRcode no navegador com o aplicativo expo no Android ou aplicativo de câmera no IOS
 
+  <li>Com isso digitalize o QRcode no navegador com o aplicativo expo no Android ou aplicativo de câmera no IOS</li>
+</ol>
 <h4><strong>Por enquanto é isso.</strong> 😄 </h4>
 
