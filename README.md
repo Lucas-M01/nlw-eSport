@@ -99,17 +99,21 @@ Clone o repositório e acesse a pasta.
 $ git clone https://github.com/Lucas-M01/nlw-eSport.git
 ```
 
+Primeiro inicia o servidor:
+
 #### Iniciar o Servidor:
 ```bash
 # Instalar as dependências
 $ npm install
 
 # Criar o banco de dados
-$ npx prisma migration
+$ npx prisma migrate dev
 
 # Iniciar o Servidor
 $ npm run dev
 ```
+
+Depois pode iniciar o Web ou Mobile:
 
 #### Inciar o Web:
 ```bash
