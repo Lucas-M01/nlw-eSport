@@ -83,7 +83,7 @@ export function Home() {
                 <h1 className="text-3xl md:text-4xl lg:text-5xl text-white font-black mt-16 mb-16" >Seu <span className="text-transparent bg-nlw-gradient bg-clip-text">duo</span> está aqui.</h1>
                 
                 <main className="w-full " >
-                    {games.length > 0 ? (
+                    {games.length > 0 && (
                         <div className="flex items-center ">
                             <div ref={slideRef} className="keen-slider"> 
                                 {games.map(game => {
@@ -95,7 +95,7 @@ export function Home() {
                                 })}
                             </div>
                         </div>
-                    ): ( <div></div> )}
+                    )}
                 </main>
                 
                 <Dialog.Root>
