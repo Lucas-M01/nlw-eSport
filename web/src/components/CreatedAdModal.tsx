@@ -58,6 +58,9 @@ export function CreatedAtModal() {
             return toast.error("Informe um horário disponível");
         }
         
+        if (data.hourStart === data.hourEnd) {
+          return toast.error("Informe horários diferentes")
+        }
 
         try {
             await axios.post(`http://localhost:3333/games/${data.game}/ads`, {

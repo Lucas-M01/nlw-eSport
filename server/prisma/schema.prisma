@@ -1,5 +1,4 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
+// Aqui deve substituir ("env("DATABASE_URL")") para "postgresql://johndoe:mypassword@localhost:5432/mydb?schema=public"
 
 generator client {
   provider = "prisma-client-js"
@@ -7,8 +6,9 @@ generator client {
 
 datasource db {
   provider = "postgresql"
-  url      = env("DATABASE_URL")
+  url      = env("DATABASE_URL") // 
 }
+
 model Game {
   id        String   @id @default(uuid())
   title     String

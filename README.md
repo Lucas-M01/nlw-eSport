@@ -101,7 +101,19 @@ utilizado para a criação das tags, utilizado para descrever o gênero de cada 
 $ git clone https://github.com/Lucas-M01/nlw-eSport.git
 ```
 
-  <li>Acesse a pasta <strong>server</strong> e inicia o servidor</li>
+  Apos o clone é necessario ter o [PostgreSQL](https://www.postgresql.org/download/) instalado e criar um database com o nome Ex: "nlweSports".
+
+  <li>Acesse a pasta <strong>server</strong> e entre na pasta <strong>prisma</strong> e acesse o arquivo <strong>schema.prisma</strong></li>
+  <li>Acessando a pasta substitua</li>
+
+```prisma
+datasource db {
+  provider = "postgresql"
+//  url      = env("DATABASE_URL") substitua essa parte
+  url      = "postgresql://NOMEDEUSUARIO:SENHA@localhost:5432/DATABASE?schema=public" // Aqui coloque os dados certo
+}
+```
+  <li>Agora dentro da pasta <strong>server</strong> siga os passos abaixo</li>
 
 #### Iniciar o Servidor:
 ```bash
@@ -110,7 +122,13 @@ $ npm install
 
 # Criar o banco de dados
 $ npx prisma migrate dev
+```
 
+  <li>Agora acesse dentro da pasta <strong>server</strong> a pasta <strong>src</strong>, e depois <strong>database</strong> e copie o arquivo <strong>tab-game.sql</strong> e coloque no seu database dentro da tabela game</li>
+
+  <li>Inicialize o servidor</li>
+
+```bash
 # Iniciar o Servidor
 $ npm run dev
 ```
