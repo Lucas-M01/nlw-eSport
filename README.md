@@ -105,6 +105,7 @@ $ git clone https://github.com/Lucas-M01/nlw-eSport.git
 
   <li>Acesse a pasta <strong>server</strong> e entre na pasta <strong>prisma</strong> e acesse o arquivo <strong>schema.prisma</strong></li>
   <li>Acessando a pasta substitua</li>
+  <br>
 
 ```prisma
 datasource db {
@@ -114,6 +115,7 @@ datasource db {
 }
 ```
   <li>Agora dentro da pasta <strong>server</strong> siga os passos abaixo</li>
+  <br>
 
 #### Iniciar o Servidor:
 ```bash
@@ -125,8 +127,10 @@ $ npx prisma migrate dev
 ```
 
   <li>Agora acesse dentro da pasta <strong>server</strong> a pasta <strong>src</strong>, e depois <strong>database</strong> e copie o arquivo <strong>tab-game.sql</strong> e coloque no seu database dentro da tabela game</li>
+  <br>
 
   <li>Inicialize o servidor</li>
+  <br>
 
 ```bash
 # Iniciar o Servidor
