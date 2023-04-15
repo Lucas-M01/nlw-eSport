@@ -15,6 +15,7 @@ import '../../styles/main.css'
 
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { Games } from "../../mock/Games";
 
 import logoImg from '../../assets/logo-nlw-esports.svg'
 import { Game } from "../Game";
@@ -62,10 +63,36 @@ export function Home() {
     }
 
     useEffect(() => {
-        axios("http://localhost:3333/games").then((response) => {
-            setGames(response.data);
-        });
+        try {
+            axios("http://localhost:3333/games").then((response) => {
+                setGames(response.data);
+            });
+        } catch (error) {
+            console.log(error);
+        }
     }, []);
+
+    function getIdGameLocalStorage() {
+        const ads = localStorage.getItem("testAds")
+        const idAds = JSON.parse(ads!)
+
+        let value = games.find((item: GameInfo) => {
+            return item.id
+        })
+
+        for(let i in idAds) {
+            if(value === idAds[i].idGame){
+                value = games.find((item: GameInfo) => {
+                    return item._count.ads   
+                })
+                value
+            }
+        }
+    }
+
+    if(games.length === 0){
+        setGames(Games)
+    }
 
     return (
         <div className="max-w-[1344px] mx-auto sm:px-8 md:px-10  flex flex-col items-center mt-11">

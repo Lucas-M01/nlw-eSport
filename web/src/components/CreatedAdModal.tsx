@@ -1,5 +1,8 @@
 import { FormEvent, useEffect, useState } from "react";
 import axios from 'axios';
+import { Games } from "../mock/Games";
+import { ads } from "../mock/Ads"
+import { DuoCardProps } from "../pages/Game/components/DuoCard";
 
 import * as Dialog from "@radix-ui/react-dialog";
 import * as Checkbox from "@radix-ui/react-checkbox"
@@ -11,6 +14,9 @@ import { Input } from "./Form/input";
 
 import { toast } from "react-toastify";
 
+interface testAdsProps extends DuoCardProps {
+  idGame: number;
+}
 
 interface Game {
     id: string;
@@ -27,6 +33,14 @@ export function CreatedAtModal() {
             setGames(response.data)
         })
     }, [])
+
+    if(games.length === 0){
+      setGames(Games)
+    }
+
+    function savedAds (test: any){
+      localStorage.setItem('testAds', JSON.stringify(test))
+    }
 
     async function handleCreatedAd(event: FormEvent){
         event.preventDefault()
@@ -63,18 +77,29 @@ export function CreatedAtModal() {
         }
 
         try {
-            await axios.post(`http://localhost:3333/games/${data.game}/ads`, {
-                name: data.name,
-                yearsPlaying: Number(data.yearsPlaying),
-                discord: data.discord,
-                weekDays: weekDays.map(Number),
-                hourStart: data.hourStart,
-                hourEnd: data.hourEnd,
-                useVoiceChannel: useVoiceChannel,
+            // await axios.post(`http://localhost:3333/games/${data.game}/ads`, {
+            //     name: data.name,
+            //     yearsPlaying: Number(data.yearsPlaying),
+            //     discord: data.discord,
+            //     weekDays: weekDays.map(Number),
+            //     hourStart: data.hourStart,
+            //     hourEnd: data.hourEnd,
+            //     useVoiceChannel: useVoiceChannel,
+            // })
+
+            ads.push({
+              idGame: Number(data.game) - 1,
+              name: data.name,
+              yearsPlaying: Number(data.yearsPlaying),
+              discord: data.discord,
+              weekDays: weekDays.map(Number),
+              hourStart: data.hourStart,
+              hourEnd: data.hourEnd,
+              useVoiceChannel: useVoiceChannel,
             })
 
+            savedAds(ads)
             toast.success("Anúncio criado com sucesso!")
-            location.reload()
         } catch (err) {
             console.log(err);
             toast.error("Erro ao criar anúncio! Tente novamente mais tarde!");
