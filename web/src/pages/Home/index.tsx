@@ -85,7 +85,7 @@ export function Home() {
                 value = games.find((item: GameInfo) => {
                     return item._count.ads   
                 })
-                value
+                return value!._count.ads += idAds[i].length
             }
         }
     }
@@ -93,6 +93,8 @@ export function Home() {
     if(games.length === 0){
         setGames(Games)
     }
+
+    getIdGameLocalStorage()
 
     return (
         <div className="max-w-[1344px] mx-auto sm:px-8 md:px-10  flex flex-col items-center mt-11">

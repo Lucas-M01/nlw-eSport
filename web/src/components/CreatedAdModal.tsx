@@ -120,7 +120,7 @@ export function CreatedAtModal() {
                   <label className='font-semibold' htmlFor="game">Qual o game?</label>
                     <Select.Root name="game" >
                         <Select.Trigger className="bg-zinc-900 py-3 px-4 rounded text-sm placeholder:text-zinc-200 flex justify-between items-center">
-                            <Select.Value placeholder="Selecione um jogo" />
+                            <Select.Value placeholder={`Selecione um jogo`} />
                             <Select.Icon>
                                 <CaretDown size={24} />
                             </Select.Icon>
@@ -131,7 +131,6 @@ export function CreatedAtModal() {
                               <CaretUp />
                             </Select.ScrollUpButton>
                               <Select.Viewport>
-
                                     {games.map(game => {
                                       return (
                                         <Select.Item className="select-none py-4 px-8 w-[25rem] flex items-center hover:bg-violet-500 " key={game.id} value={game.id}  >

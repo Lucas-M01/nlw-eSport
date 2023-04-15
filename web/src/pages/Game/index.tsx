@@ -78,16 +78,16 @@ export function Game() {
         function getIdGameLocalStorage(index: number) {
             const ads = localStorage.getItem("testAds")
             const idAds = JSON.parse(ads!)
+            let arrayMock = []
             for(let i in idAds) {
                 if(index === idAds[i].idGame){
                     const testddd = idAds.find((item: any) => {
                         return item.idGame === index
                     })
-                    let arrayMock = []
                     arrayMock.push(testddd)
-                    return setDuos(arrayMock)
                 }
             }
+            return setDuos(arrayMock)
           }
         
         if(game.length === 1){
