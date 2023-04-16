@@ -88,7 +88,7 @@ export function CreatedAtModal() {
             // })
 
             ads.push({
-              idGame: Number(data.game) - 1,
+              idGame: Number(data.game),
               name: data.name,
               yearsPlaying: Number(data.yearsPlaying),
               discord: data.discord,

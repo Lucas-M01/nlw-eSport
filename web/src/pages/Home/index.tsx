@@ -62,6 +62,22 @@ export function Home() {
         success: "bg-[#2A2634] relative flex p-3 min-h-10 rounded-md justify-between overflow-hidden cursor-pointer"
     }
 
+    function updateGameAds() {
+        const adsData = localStorage.getItem("testAds")
+        const ads = JSON.parse(adsData!)
+
+        games.forEach(game => {
+            const adInfo = ads.find((ad:any) => ad.idGame === Number(game.id))
+            if (adInfo) {
+              game._count.ads += 1;
+            }
+        });
+
+        return games.map(game => game._count.ads); 
+    }
+
+    updateGameAds()
+
     useEffect(() => {
         try {
             axios("http://localhost:3333/games").then((response) => {
@@ -72,29 +88,11 @@ export function Home() {
         }
     }, []);
 
-    function getIdGameLocalStorage() {
-        const ads = localStorage.getItem("testAds")
-        const idAds = JSON.parse(ads!)
-
-        let value = games.find((item: GameInfo) => {
-            return item.id
-        })
-
-        for(let i in idAds) {
-            if(value === idAds[i].idGame){
-                value = games.find((item: GameInfo) => {
-                    return item._count.ads   
-                })
-                return value!._count.ads += idAds[i].length
-            }
-        }
-    }
 
     if(games.length === 0){
         setGames(Games)
     }
 
-    getIdGameLocalStorage()
 
     return (
         <div className="max-w-[1344px] mx-auto sm:px-8 md:px-10  flex flex-col items-center mt-11">

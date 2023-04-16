@@ -81,10 +81,7 @@ export function Game() {
             let arrayMock = []
             for(let i in idAds) {
                 if(index === idAds[i].idGame){
-                    const testddd = idAds.find((item: any) => {
-                        return item.idGame === index
-                    })
-                    arrayMock.push(testddd)
+                    arrayMock.push(idAds[i])
                 }
             }
             return setDuos(arrayMock)
