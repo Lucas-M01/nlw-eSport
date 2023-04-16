@@ -21,6 +21,13 @@ export interface Game {
 }
 
 
+export function countAdsByGame(gameId: number): number {
+    const ads = localStorage.getItem("testAds");
+    const parsedAds = JSON.parse(ads!);
+    const adsByGame = parsedAds.filter((ad: any) => ad.idGame === gameId);
+    return adsByGame.length;
+  }
+
 export function Game() {
     const [duos, setDuos] = useState<DuoCardProps[]>([])
     const [showMore, setShowMore] = useState(false)
@@ -93,8 +100,7 @@ export function Game() {
             getIdGameLocalStorage(index)
         }
 
-        // const { title, bannerUrl, tags, about, link, id }: Game = game[0]
-        
+
     return(
         <div className="ml-6 sm:ml-28 md:mr-28 max-w-[1344px]">
             <Header title={game.title} />
