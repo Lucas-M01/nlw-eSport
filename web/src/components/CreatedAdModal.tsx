@@ -39,73 +39,65 @@ export function CreatedAtModal() {
     }
 
     function savedAds (test: any){
-      localStorage.setItem('testAds', JSON.stringify(test))
+      let currentAds = JSON.parse(localStorage.getItem('testAds') || '[]');
+      currentAds.push(test);
+      localStorage.setItem('testAds', JSON.stringify(currentAds));
     }
-
+    
     async function handleCreatedAd(event: FormEvent){
-        event.preventDefault()
-
-        const formData = new FormData(event.target as HTMLFormElement)
-        const data = Object.fromEntries(formData)
-       
-        if(!data.game){
-          return toast.error("Informe o jogo")
-        }
+      event.preventDefault()
+  
+      const formData = new FormData(event.target as HTMLFormElement)
+      const data = Object.fromEntries(formData)
+     
+      if(!data.game){
+        return toast.error("Informe o jogo")
+      }
+    
+      if (!data.name) {
+        return toast.error("Informe seu Nome");
+      }
       
-        if (!data.name) {
-          return toast.error("Informe seu Nome");
-        }
-        
-        if (!data.yearsPlaying) {
-          return toast.error("Informe seu tempo de jogo");
-        }
-
-        if (!data.discord) {
-            return toast.error("Informe seu Discord");
-        }
-
-        if (weekDays.length === 0) {
-            return toast.error("Selecione pelo menos um dia");
-        }
-
-        if (data.hourStart === "" || data.hourEnd === "") {
-            return toast.error("Informe um horário disponível");
-        }
-        
-        if (data.hourStart === data.hourEnd) {
-          return toast.error("Informe horários diferentes")
-        }
-
-        try {
-            // await axios.post(`http://localhost:3333/games/${data.game}/ads`, {
-            //     name: data.name,
-            //     yearsPlaying: Number(data.yearsPlaying),
-            //     discord: data.discord,
-            //     weekDays: weekDays.map(Number),
-            //     hourStart: data.hourStart,
-            //     hourEnd: data.hourEnd,
-            //     useVoiceChannel: useVoiceChannel,
-            // })
-
-            ads.push({
-              idGame: Number(data.game),
-              name: data.name,
-              yearsPlaying: Number(data.yearsPlaying),
-              discord: data.discord,
-              weekDays: weekDays.map(Number),
-              hourStart: data.hourStart,
-              hourEnd: data.hourEnd,
-              useVoiceChannel: useVoiceChannel,
-            })
-
-            savedAds(ads)
-            toast.success("Anúncio criado com sucesso!")
-            location.reload()
-        } catch (err) {
-            console.log(err);
-            toast.error("Erro ao criar anúncio! Tente novamente mais tarde!");
-        }
-    }
+      if (!data.yearsPlaying) {
+        return toast.error("Informe seu tempo de jogo");
+      }
+  
+      if (!data.discord) {
+          return toast.error("Informe seu Discord");
+      }
+  
+      if (weekDays.length === 0) {
+          return toast.error("Selecione pelo menos um dia");
+      }
+  
+      if (data.hourStart === "" || data.hourEnd === "") {
+          return toast.error("Informe um horário disponível");
+      }
+      
+      if (data.hourStart === data.hourEnd) {
+        return toast.error("Informe horários diferentes")
+      }
+  
+      try {
+          const newAd = {
+            idGame: Number(data.game),
+            name: data.name,
+            yearsPlaying: Number(data.yearsPlaying),
+            discord: data.discord,
+            weekDays: weekDays.map(Number),
+            hourStart: data.hourStart,
+            hourEnd: data.hourEnd,
+            useVoiceChannel: useVoiceChannel,
+          }
+  
+          savedAds(newAd);
+          toast.success("Anúncio criado com sucesso!")
+          location.reload()
+      } catch (err) {
+          console.log(err);
+          toast.error("Erro ao criar anúncio! Tente novamente mais tarde!");
+      }
+  }
 
     return(
         <Dialog.Portal>
