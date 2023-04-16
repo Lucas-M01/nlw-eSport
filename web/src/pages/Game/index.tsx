@@ -92,6 +92,8 @@ export function Game() {
             setGame(Games[index])
             getIdGameLocalStorage(index)
         }
+
+        // const { title, bannerUrl, tags, about, link, id }: Game = game[0]
         
     return(
         <div className="ml-6 sm:ml-28 md:mr-28 max-w-[1344px]">

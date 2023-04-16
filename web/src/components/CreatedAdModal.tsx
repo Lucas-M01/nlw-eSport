@@ -100,6 +100,7 @@ export function CreatedAtModal() {
 
             savedAds(ads)
             toast.success("Anúncio criado com sucesso!")
+            location.reload()
         } catch (err) {
             console.log(err);
             toast.error("Erro ao criar anúncio! Tente novamente mais tarde!");

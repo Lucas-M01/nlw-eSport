@@ -101,7 +101,20 @@ utilizado para a criação das tags, utilizado para descrever o gênero de cada 
 $ git clone https://github.com/Lucas-M01/nlw-eSport.git
 ```
 
-  Apos o clone é necessario ter o [PostgreSQL](https://www.postgresql.org/download/) instalado e criar um database com o nome Ex: "nlweSports".
+  Após o clone você pode ver a aplicação funcionando pelo front-end apenas com os dados mockados seguindo o seguinte passo:
+
+```bash
+$ cd web
+$ npm run dev
+```
+
+  Com isso poderá ver como a aplicação funciona, apenas pelo front-end.
+
+<br>
+
+  Caso queira ver a aplicação com todas as funcionalidades é só seguir os seguintes passos: 
+
+  Após o clone é necessário ter o [PostgreSQL](https://www.postgresql.org/download/) instalado e criar um Database com o nome Ex: "nlweSports".
 
   <li>Acesse a pasta <strong>server</strong> e entre na pasta <strong>prisma</strong> e acesse o arquivo <strong>schema.prisma</strong></li>
   <li>Acessando a pasta substitua</li>
@@ -126,7 +139,7 @@ $ npm install
 $ npx prisma migrate dev
 ```
 
-  <li>Agora acesse dentro da pasta <strong>server</strong> a pasta <strong>src</strong>, e depois <strong>database</strong> e copie o arquivo <strong>tab-game.sql</strong> e coloque no seu database dentro da tabela game</li>
+  <li>Agora acesse dentro da pasta <strong>server</strong> a pasta <strong>src</strong>, e depois <strong>database</strong> e copie o arquivo <strong>tab-game.sql</strong> e coloque no seu Database dentro da tabela game</li>
   <br>
 
   <li>Inicialize o servidor</li>
@@ -139,7 +152,7 @@ $ npm run dev
 
   <li>Depois acesse a pasta <strong>web</strong> para inicializar ou acesse a <strong>mobile</strong> e inicialize o projeto</li>
 
-#### Inciar o Web:
+#### Iniciar o Web:
 ```bash
 # Instalar as dependências
 $ npm install
